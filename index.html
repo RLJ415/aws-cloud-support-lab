@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Operations Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>AWS Operations Dashboard</h1>
+    <p>Cloud Support • Monitoring • Incident Response • Analytics</p>
+</header>
+
+<nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Incidents</a>
+    <a href="#">Knowledge Base</a>
+    <a href="#">AWS Services</a>
+    <a href="#">Reports</a>
+</nav>
+
+<main>
+
+<section class="card">
+    <h2>System Health</h2>
+    <p>CloudWatch metrics and service health will appear here.</p>
+</section>
+
+<section class="card">
+
+    <h2>Recent Incidents</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Service</th>
+                <th>Severity</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody id="incidentTable">
+
+</tbody>
+
+    </table>
+
+</section>
+
+<section class="card">
+    <h2>AWS Environment</h2>
+    <p>Document EC2, S3, IAM, VPC, CloudFront, Route 53, and other services.</p>
+</section>
+
+<section class="card">
+    <h2>Analytics</h2>
+    <p>SQL reports, KPIs, and dashboards will live here.</p>
+</section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>

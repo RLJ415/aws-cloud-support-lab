@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+header {
+    background: #1e293b;
+    padding: 20px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+nav {
+    background: #111827;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 25px;
+    font-weight: bold;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+    padding: 25px;
+}
+
+.card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #38bdf8;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: #0f172a;
+    color: #38bdf8;
+    text-align: left;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    border-top: 1px solid #334155;
+}
+
+.incident-id {
+    white-space: nowrap;
+}
+
+tr:hover {
+    background: #334155;
+}
