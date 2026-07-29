@@ -33,6 +33,15 @@
 <section class="card">
 
     <h2>Recent Incidents</h2>
+    <input
+    type="text"
+    id="searchBox"
+    placeholder="Search AWS service..."
+>
+
+<button id="clearSearch">
+    Clear Search
+</button>
 
     <table>
 
@@ -60,7 +69,23 @@
 
 <section class="card">
     <h2>Analytics</h2>
-    <p>SQL reports, KPIs, and dashboards will live here.</p>
+
+    <p>Total Incidents:
+        <span id="totalIncidents"></span>
+    </p>
+
+    <p>Open:
+        <span id="openIncidents"></span>
+    </p>
+
+    <p>Resolved:
+        <span id="resolvedIncidents"></span>
+    </p>
+
+    <p>Investigating:
+        <span id="investigatingIncidents"></span>
+    </p>
+
 </section>
 
 </main>
