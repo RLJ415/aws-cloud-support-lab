@@ -10,87 +10,115 @@
 
 <body>
 
-<header>
-    <h1>AWS Operations Dashboard</h1>
-    <p>Cloud Support • Monitoring • Incident Response • Analytics</p>
-</header>
+    <header>
+        <h1>AWS Operations Dashboard</h1>
+        <p>Cloud Support • Monitoring • Incident Response • Analytics</p>
+    </header>
 
-<nav>
-    <a href="#">Dashboard</a>
-    <a href="#">Incidents</a>
-    <a href="#">Knowledge Base</a>
-    <a href="#">AWS Services</a>
-    <a href="#">Reports</a>
-</nav>
+    <nav>
+        <a href="#">Dashboard</a>
+        <a href="#">Incidents</a>
+        <a href="#">Knowledge Base</a>
+        <a href="#">AWS Services</a>
+        <a href="#">Reports</a>
+    </nav>
 
-<main>
+    <main>
 
-<section class="card">
-    <h2>System Health</h2>
-    <p>CloudWatch metrics and service health will appear here.</p>
-</section>
+        <section class="card">
+            <h2>System Health</h2>
+            <p>CloudWatch metrics and service health will appear here.</p>
+        </section>
 
-<section class="card">
+        <section class="card">
 
-    <h2>Recent Incidents</h2>
-    <input
-    type="text"
-    id="searchBox"
-    placeholder="Search AWS service..."
->
+            <h2>Recent Incidents</h2>
+            <input type="text" id="searchBox" placeholder="Search AWS service...">
 
-<button id="clearSearch">
-    Clear Search
-</button>
+            <button id="clearSearch">
+                Clear Search
+            </button>
 
-    <table>
+            <div id="filters">
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Service</th>
-                <th>Severity</th>
-                <th>Status</th>
-            </tr>
-        </thead>
+                <button id="showAll">All</button>
 
-        <tbody id="incidentTable">
+                <button id="showOpen">Open</button>
 
-</tbody>
+                <button id="showResolved">Resolved</button>
 
-    </table>
+                <button id="showInvestigating">Investigating</button>
 
-</section>
+            </div>
 
-<section class="card">
-    <h2>AWS Environment</h2>
-    <p>Document EC2, S3, IAM, VPC, CloudFront, Route 53, and other services.</p>
-</section>
+            <table>
 
-<section class="card">
-    <h2>Analytics</h2>
+                <thead>
+                    <tr>
+                        <th>ID</th>
 
-    <p>Total Incidents:
-        <span id="totalIncidents"></span>
-    </p>
+                        <th id="sortService" style="cursor:pointer;">
+                            Service ↕
+                        </th>
 
-    <p>Open:
-        <span id="openIncidents"></span>
-    </p>
+                        <th>Severity</th>
 
-    <p>Resolved:
-        <span id="resolvedIncidents"></span>
-    </p>
+                        <th>Status</th>
+                    </tr>
+                </thead>
 
-    <p>Investigating:
-        <span id="investigatingIncidents"></span>
-    </p>
+                <tbody id="incidentTable">
 
-</section>
+                </tbody>
 
-</main>
+            </table>
 
-<script src="script.js"></script>
+        </section>
+
+        <section class="card">
+            <h2>AWS Environment</h2>
+            <p>Document EC2, S3, IAM, VPC, CloudFront, Route 53, and other services.</p>
+        </section>
+
+        <section class="card">
+            <h2>Analytics</h2>
+
+            <p>Total Incidents:
+                <span id="totalIncidents"></span>
+            </p>
+
+            <p>Open:
+                <span id="openIncidents"></span>
+            </p>
+
+            <p>Resolved:
+                <span id="resolvedIncidents"></span>
+            </p>
+
+            <p>Investigating:
+                <span id="investigatingIncidents"></span>
+            </p>
+
+        </section>
+
+<hr>
+
+<div id="incidentDetails">
+
+    <h2>Incident Details</h2>
+
+    <p>Select an incident to view details.</p>
+
+    <button id="resolveBtn" style="display:none;">
+        Mark as Resolved
+    </button>
+
+</div>
+
+    </main>
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

@@ -138,3 +138,58 @@ tr:hover {
     cursor: pointer;
     font-weight: bold;
 }
+
+#filters {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#filters button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#incidentDetails {
+
+    margin-top: 30px;
+    padding: 20px;
+
+    border: 2px solid #ddd;
+    border-radius: 8px;
+
+    background: white;
+
+}
+
+#incidentDetails {
+    color: black;
+}
+
+#incidentDetails h2 {
+    color: #1ea7fd;
+}
+
+.priority {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.p1 {
+    background-color: #d32f2f;
+}
+
+.p2 {
+    background-color: #f57c00;
+}
+
+.p3 {
+    background-color: #388e3c;
+}
