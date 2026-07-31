@@ -39,6 +39,11 @@
                 Clear Search
             </button>
 
+            <select id="serviceFilter">
+
+                <option value="All">All Services</option>
+
+            </select>
             <div id="filters">
 
                 <button id="showAll">All</button>
@@ -76,13 +81,35 @@
         </section>
 
         <section class="card">
-            <h2>AWS Environment</h2>
-            <p>Document EC2, S3, IAM, VPC, CloudFront, Route 53, and other services.</p>
-        </section>
 
+            <h2>Create Incident</h2>
+
+            <input type="text" id="serviceInput" placeholder="AWS Service">
+
+            <select id="severityInput">
+
+                <option>Low</option>
+
+                <option>Medium</option>
+
+                <option>High</option>
+
+                <option>Critical</option>
+
+            </select>
+
+            <button id="addIncidentBtn">
+
+                Add Incident
+
+            </button>
+
+        </section>
         <section class="card">
+
             <h2>Analytics</h2>
 
+            <div id="serviceStats"></div>
             <p>Total Incidents:
                 <span id="totalIncidents"></span>
             </p>
@@ -101,19 +128,25 @@
 
         </section>
 
-<hr>
+        <section class="card">
 
-<div id="incidentDetails">
+            <h2>Recent Activity</h2>
 
-    <h2>Incident Details</h2>
+            <div id="activityLog">
 
-    <p>Select an incident to view details.</p>
+                <p>No activity yet.</p>
 
-    <button id="resolveBtn" style="display:none;">
-        Mark as Resolved
-    </button>
+            </div>
 
-</div>
+        </section>
+
+        <section class="card" id="incidentDetails">
+
+            <h2>Incident Details</h2>
+
+            <p>Select an incident to view details.</p>
+
+        </section>
 
     </main>
 

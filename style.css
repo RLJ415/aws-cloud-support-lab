@@ -193,3 +193,93 @@ tr:hover {
 .p3 {
     background-color: #388e3c;
 }
+
+#activityLog {
+
+    margin-top: 15px;
+
+    max-height: 300px;
+
+    overflow-y: auto;
+
+}
+
+.activity-item {
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+    border-left: 4px solid #1ea7fd;
+
+    background: rgba(255,255,255,.05);
+
+    border-radius: 6px;
+
+}
+
+#serviceInput,
+#severityInput,
+#serviceFilter {
+
+    width: 100%;
+
+    margin-bottom: 10px;
+
+    padding: 10px;
+
+}
+
+#addIncidentBtn {
+
+    width: 100%;
+
+    padding: 10px;
+
+    cursor: pointer;
+
+}
+
+#deleteIncidentBtn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 10px;
+
+    background: #c62828;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+#deleteIncidentBtn:hover {
+
+    background: #a71d1d;
+
+}
+
+#serviceStats {
+
+    margin-bottom: 20px;
+
+}
+
+#serviceStats h3 {
+
+    margin-bottom: 10px;
+
+}
+
+#serviceStats p {
+
+    margin: 6px 0;
+
+}

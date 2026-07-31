@@ -1,13 +1,20 @@
 const searchBox = document.getElementById("searchBox");
-const clearSearch = document.getElementById("clearSearch");
+
+const serviceFilter = document.getElementById("serviceFilter"); const clearSearch = document.getElementById("clearSearch");
 const sortService = document.getElementById("sortService");
 
 const showAll = document.getElementById("showAll");
 const showOpen = document.getElementById("showOpen");
 const showResolved = document.getElementById("showResolved");
 const showInvestigating = document.getElementById("showInvestigating");
+const serviceInput = document.getElementById("serviceInput");
+
+const severityInput = document.getElementById("severityInput");
+
+const addIncidentBtn = document.getElementById("addIncidentBtn");
 
 let ascending = true;
+
 const incidents = [
     {
         id: "INC-1001",
@@ -56,7 +63,120 @@ const incidents = [
     }
 ];
 
+let nextIncidentNumber = Math.max(
+    ...incidents.map(function (incident) {
+        return Number(incident.id.replace("INC-", ""));
+    })
+) + 1;
+
 const incidentTable = document.getElementById("incidentTable");
+
+const activityLog = document.getElementById("activityLog");
+
+const serviceStats = document.getElementById("serviceStats");
+
+function addActivity(message) {
+
+    const now = new Date().toLocaleTimeString();
+
+    const activity = `
+
+        <div class="activity-item">
+
+            <strong>${now}</strong>
+
+            <br>
+
+            ${message}
+
+        </div>
+
+    `;
+
+    if (activityLog.innerHTML.includes("No activity yet.")) {
+
+        activityLog.innerHTML = activity;
+
+    } else {
+
+        activityLog.innerHTML = activity + activityLog.innerHTML;
+
+    }
+
+}
+
+function populateServiceFilter() {
+
+    const services = [...new Set(incidents.map(i => i.service))];
+
+    serviceFilter.innerHTML =
+        `<option value="All">All Services</option>`;
+
+    services.sort().forEach(function (service) {
+
+        serviceFilter.innerHTML +=
+            `<option value="${service}">${service}</option>`;
+
+    });
+
+}
+
+let currentStatusFilter = "All";
+
+function applyFilters() {
+
+    const rows = document.querySelectorAll("#incidentTable tr");
+
+    rows.forEach(function (row) {
+
+        const text = row.textContent.toLowerCase();
+
+        const matchesSearch =
+            text.includes(searchBox.value.toLowerCase());
+
+        const matchesService =
+            serviceFilter.value === "All" ||
+            text.includes(serviceFilter.value.toLowerCase());
+
+        const matchesStatus =
+            currentStatusFilter === "All" ||
+            text.includes(currentStatusFilter.toLowerCase());
+
+        row.style.display =
+            matchesSearch &&
+                matchesService &&
+                matchesStatus
+                ? ""
+                : "none";
+
+    });
+
+}
+
+function updateServiceStats() {
+
+    const totals = {};
+
+    incidents.forEach(function (incident) {
+
+        totals[incident.service] =
+            (totals[incident.service] || 0) + 1;
+
+    });
+
+    serviceStats.innerHTML = "<h3>Incidents by Service</h3>";
+
+    for (const service in totals) {
+
+        serviceStats.innerHTML += `
+
+            <p>${service}: <strong>${totals[service]}</strong></p>
+
+        `;
+
+    }
+
+}
 
 function updateAnalytics() {
 
@@ -70,6 +190,10 @@ function updateAnalytics() {
 
     document.getElementById("investigatingIncidents").textContent =
         incidents.filter(incident => incident.status === "Investigating").length;
+
+    populateServiceFilter();
+
+    updateServiceStats();
 
 }
 
@@ -150,25 +274,69 @@ function renderIncidents() {
     Update Status
 </button>
 
+<button id="deleteIncidentBtn">
+    Delete Incident
+</button>
+
 `;
 
-const updateStatusBtn = document.getElementById("updateStatusBtn");
+            const updateStatusBtn = document.getElementById("updateStatusBtn");
 
-const statusSelect = document.getElementById("statusSelect");
+            const deleteIncidentBtn = document.getElementById("deleteIncidentBtn");
 
-updateStatusBtn.onclick = function () {
+            const statusSelect = document.getElementById("statusSelect");
+            updateStatusBtn.onclick = function () {
 
-    incident.status = statusSelect.value;
+                incident.status = statusSelect.value;
 
-    incident.lastUpdated = new Date().toLocaleString();
+                incident.lastUpdated = new Date().toLocaleString();
 
-    renderIncidents();
+                addActivity(
+                    `${incident.id} status changed to <strong>${incident.status}</strong>`
+                );
 
-    updateAnalytics();
+                renderIncidents();
 
-    document.querySelector(`[data-id="${incident.id}"]`).click();
+                updateAnalytics();
 
-};
+                document.querySelector(`[data-id="${incident.id}"]`).click();
+            };
+
+            deleteIncidentBtn.onclick = function () {
+
+                const confirmed = confirm(
+                    `Delete ${incident.id}? This action cannot be undone.`
+                );
+
+                if (!confirmed) {
+
+                    return;
+
+                }
+
+                const index = incidents.findIndex(function (item) {
+                    return item.id === incident.id;
+                });
+
+                incidents.splice(index, 1);
+
+                addActivity(
+                    `${incident.id} was <strong>deleted</strong>`
+                );
+
+                renderIncidents();
+
+                updateAnalytics();
+
+                document.getElementById("incidentDetails").innerHTML = `
+
+        <h2>Incident Details</h2>
+
+        <p>Select an incident to view details.</p>
+
+    `;
+
+            };
 
         });
 
@@ -179,33 +347,12 @@ updateStatusBtn.onclick = function () {
 renderIncidents();
 updateAnalytics();
 
-searchBox.addEventListener("keyup", function () {
-
-    const searchText = searchBox.value.toLowerCase();
-
-    const rows = document.querySelectorAll("#incidentTable tr");
-
-    rows.forEach(function (row) {
-
-        if (row.textContent.toLowerCase().includes(searchText)) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
-
-    });
-
-});
-
+searchBox.addEventListener("keyup", applyFilters);
 clearSearch.addEventListener("click", function () {
 
     searchBox.value = "";
 
-    const rows = document.querySelectorAll("#incidentTable tr");
-
-    rows.forEach(function (row) {
-        row.style.display = "";
-    });
+    applyFilters();
 
 });
 
@@ -229,41 +376,85 @@ sortService.addEventListener("click", function () {
 
 showAll.addEventListener("click", function () {
 
-    document.querySelectorAll("#incidentTable tr").forEach(function (row) {
-        row.style.display = "";
-    });
+    currentStatusFilter = "All";
+
+    applyFilters();
 
 });
 
 showOpen.addEventListener("click", function () {
 
-    document.querySelectorAll("#incidentTable tr").forEach(function (row) {
+    currentStatusFilter = "Open";
 
-        row.style.display =
-            row.textContent.includes("Open") ? "" : "none";
-
-    });
+    applyFilters();
 
 });
 
 showResolved.addEventListener("click", function () {
 
-    document.querySelectorAll("#incidentTable tr").forEach(function (row) {
+    currentStatusFilter = "Resolved";
 
-        row.style.display =
-            row.textContent.includes("Resolved") ? "" : "none";
-
-    });
+    applyFilters();
 
 });
-
 showInvestigating.addEventListener("click", function () {
 
-    document.querySelectorAll("#incidentTable tr").forEach(function (row) {
+    currentStatusFilter = "Investigating";
 
-        row.style.display =
-            row.textContent.includes("Investigating") ? "" : "none";
-
-    });
+    applyFilters();
 
 });
+addIncidentBtn.onclick = function () {
+
+    const serviceName = serviceInput.value.trim();
+
+    if (serviceName === "") {
+
+        alert("Please enter an AWS service.");
+
+        serviceInput.focus();
+
+        return;
+
+    }
+
+    const newIncident = {
+
+        id: "INC-" + nextIncidentNumber++,
+
+        service: serviceName,
+
+        severity: severityInput.value,
+
+        priority: severityInput.value === "Critical"
+            ? "P1"
+            : severityInput.value === "High"
+                ? "P2"
+                : "P3",
+
+        status: "Open",
+
+        lastUpdated: new Date().toLocaleString(),
+
+        description: "New incident created."
+
+    };
+
+    incidents.unshift(newIncident);
+
+    addActivity(
+        `${newIncident.id} was created for <strong>${newIncident.service}</strong>`
+    );
+
+        renderIncidents();
+    updateAnalytics();
+
+    serviceInput.value = "";
+
+    severityInput.value = "Low";
+
+    serviceInput.focus();
+    
+};
+
+serviceFilter.addEventListener("change", applyFilters);
