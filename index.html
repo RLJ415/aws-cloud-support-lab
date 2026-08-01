@@ -26,24 +26,45 @@
     <main>
 
         <section class="card">
+
             <h2>System Health</h2>
-            <p>CloudWatch metrics and service health will appear here.</p>
+
+            <div id="systemHealth">
+
+                <p>🟢 Amazon EC2 <strong>Healthy</strong></p>
+
+                <p>🟢 Amazon S3 <strong>Healthy</strong></p>
+
+                <p>🟡 Amazon RDS <strong>Degraded</strong></p>
+
+                <p>🔴 Amazon CloudFront <strong>Outage</strong></p>
+
+                <p>🟢 AWS IAM <strong>Healthy</strong></p>
+
+            </div>
+
         </section>
 
         <section class="card">
 
             <h2>Recent Incidents</h2>
-            <input type="text" id="searchBox" placeholder="Search AWS service...">
+            <div id="searchToolbar">
 
-            <button id="clearSearch">
-                Clear Search
-            </button>
+                <input type="text" id="searchBox" placeholder="🔍 Search AWS service...">
 
-            <select id="serviceFilter">
+                <select id="serviceFilter">
 
-                <option value="All">All Services</option>
+                    <option value="All">All Services</option>
 
-            </select>
+                </select>
+
+                <button id="clearSearch">
+
+                    Clear
+
+                </button>
+
+            </div>
             <div id="filters">
 
                 <button id="showAll">All</button>
@@ -71,6 +92,14 @@
                         <th>Status</th>
                     </tr>
                 </thead>
+
+                <p id="resultsCount">
+                    Showing 5 of 5 incidents
+                </p>
+
+                <p id="noResults" style="display:none;">
+                    No incidents found.
+                </p>
 
                 <tbody id="incidentTable">
 
@@ -109,22 +138,43 @@
 
             <h2>Analytics</h2>
 
+            <div id="analyticsCards">
+
+                <div class="analytics-card total">
+
+                    <h3 id="totalIncidents"></h3>
+
+                    <p>Total</p>
+
+                </div>
+
+                <div class="analytics-card open-card">
+
+                    <h3 id="openIncidents"></h3>
+
+                    <p>Open</p>
+
+                </div>
+
+                <div class="analytics-card resolved-card">
+
+                    <h3 id="resolvedIncidents"></h3>
+
+                    <p>Resolved</p>
+
+                </div>
+
+                <div class="analytics-card investigating-card">
+
+                    <h3 id="investigatingIncidents"></h3>
+
+                    <p>Investigating</p>
+
+                </div>
+
+            </div>
+
             <div id="serviceStats"></div>
-            <p>Total Incidents:
-                <span id="totalIncidents"></span>
-            </p>
-
-            <p>Open:
-                <span id="openIncidents"></span>
-            </p>
-
-            <p>Resolved:
-                <span id="resolvedIncidents"></span>
-            </p>
-
-            <p>Investigating:
-                <span id="investigatingIncidents"></span>
-            </p>
 
         </section>
 

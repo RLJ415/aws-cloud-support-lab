@@ -127,6 +127,8 @@ function applyFilters() {
 
     const rows = document.querySelectorAll("#incidentTable tr");
 
+    let visibleCount = 0;
+
     rows.forEach(function (row) {
 
         const text = row.textContent.toLowerCase();
@@ -142,14 +144,26 @@ function applyFilters() {
             currentStatusFilter === "All" ||
             text.includes(currentStatusFilter.toLowerCase());
 
-        row.style.display =
+        const visible =
             matchesSearch &&
-                matchesService &&
-                matchesStatus
-                ? ""
-                : "none";
+            matchesService &&
+            matchesStatus;
+
+        row.style.display = visible ? "" : "none";
+
+        if (visible) {
+
+            visibleCount++;
+
+        }
 
     });
+
+    document.getElementById("resultsCount").textContent =
+        `Showing ${visibleCount} of ${incidents.length} incidents`;
+
+    document.getElementById("noResults").style.display =
+        visibleCount === 0 ? "block" : "none";
 
 }
 
@@ -250,11 +264,19 @@ function renderIncidents() {
 
     <p><strong>Status:</strong> ${incident.status}</p>
 
-    <p><strong>Last Updated:</strong> ${incident.lastUpdated}</p>
+<p>
 
-    <p><strong>Description:</strong> ${incident.description}</p>
+    <strong>Last Updated:</strong>
 
-   <select id="statusSelect">
+    <span class="last-updated">
+
+        ${incident.lastUpdated}
+
+    </span>
+
+</p>
+
+<p><strong>Description:</strong> ${incident.description}</p>   <select id="statusSelect">
 
     <option value="Open" ${incident.status === "Open" ? "selected" : ""}>
         Open
@@ -454,7 +476,7 @@ addIncidentBtn.onclick = function () {
     severityInput.value = "Low";
 
     serviceInput.focus();
-    
+
 };
 
 serviceFilter.addEventListener("change", applyFilters);
